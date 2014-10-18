@@ -41,7 +41,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.os.RemoteException;
 import android.os.SystemProperties;
-import android.preference.Preference;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.telephony.MSimTelephonyManager;
@@ -3460,52 +3459,21 @@ public class PhoneUtils {
     static class PhoneSettings {
         /* vibration preferences */
         static boolean vibOn45Secs(Context context) {
-            return vibOn45Secs(context, -1);
-        }
-        static boolean vibOn45Secs(Context context, int subscription) {
-            return getPrefs(context).getBoolean(getKeyForSubscription("button_vibrate_45",
-                            subscription), false);
+            return getPrefs(context).getBoolean("button_vibrate_45", false);
         }
         static boolean vibHangup(Context context) {
-            return vibHangup(context, -1);
-        }
-        static boolean vibHangup(Context context, int subscription) {
-            return getPrefs(context).getBoolean(getKeyForSubscription("button_vibrate_hangup",
-                            subscription), false);
+            return getPrefs(context).getBoolean("button_vibrate_hangup", false);
         }
         static boolean vibOutgoing(Context context) {
-            return vibOutgoing(context, -1);
-        }
-        static boolean vibOutgoing(Context context, int subscription) {
-            return getPrefs(context).getBoolean(getKeyForSubscription("button_vibrate_outgoing",
-                    subscription), false);
+            return getPrefs(context).getBoolean("button_vibrate_outgoing", false);
         }
         static boolean vibCallWaiting(Context context) {
-            return vibOutgoing(context, -1);
-        }
-        static boolean vibCallWaiting(Context context, int subscription) {
-            return getPrefs(context).getBoolean(getKeyForSubscription("button_vibrate_call_waiting",
-                    subscription), false);
+            return getPrefs(context).getBoolean("button_vibrate_call_waiting", false);
         }
 
         /* misc. UI and behaviour preferences */
         static boolean showInCallEvents(Context context) {
-            return showInCallEvents(context, -1);
-        }
-        static boolean showInCallEvents(Context context, int subscription) {
-            return getPrefs(context).getBoolean(getKeyForSubscription("button_show_ssn_key",
-                    subscription), false);
-        }
-
-        public static String getKeyForSubscription(String key, int subscription) {
-            if (subscription == -1) return key;
-            return key + subscription;
-        }
-
-        static void setPreferenceKeyForSubscription(Preference preference, int subscription) {
-            if (subscription == -1 || preference == null) return;
-            String key = preference.getKey() + subscription;
-            preference.setKey(key);
+            return getPrefs(context).getBoolean("button_show_ssn_key", false);
         }
 
         private static SharedPreferences getPrefs(Context context) {
